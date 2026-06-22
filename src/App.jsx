@@ -215,7 +215,7 @@ function App() {
             <h1 className="text-3xl font-black text-slate-800 tracking-tight">MGM SPO - Material Monitoring</h1>
             <p className="text-slate-500 mt-1">Material Tracing & Allocation by SPO</p>
           </div>
-          <button onClick={() => loadFromFirebase(false)} className="flex items-center gap-2 text-blue-700 font-bold bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded transition-colors text-sm shadow-sm">
+          <button onClick={() => loadFromFirebase(false)} className="flex items-center gap-2 text-blue-700 font-bold bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-sm transition-colors text-sm shadow-xs">
             <RefreshCw size={14} /> Sync Server Data
           </button>
         </header>
@@ -236,7 +236,7 @@ function App() {
                 <Calendar size={16} /> Jadwal & Ringkasan Material
               </button>
             </div>
-            <button onClick={saveToFirebase} className="bg-emerald-600 text-white px-5 py-2 rounded text-sm hover:bg-emerald-700 flex items-center gap-2 shadow font-bold w-full sm:w-auto justify-center transition-colors">
+            <button onClick={saveToFirebase} className="bg-emerald-600 text-white px-5 py-2 rounded-sm text-sm hover:bg-emerald-700 flex items-center gap-2 shadow-sm font-bold w-full sm:w-auto justify-center transition-colors">
               <Save size={16} /> Save Server Data
             </button>
           </div>
@@ -246,35 +246,35 @@ function App() {
         {data.length > 0 && activeTab === 'monitoring' && (
           <section className="animate-in fade-in duration-300">
             {/* Filter Panel Monitoring */}
-            <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200 mb-6">
+            <div className="bg-white p-5 rounded-lg shadow-xs border border-slate-200 mb-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs mb-4">
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Cari SPO</label>
-                  <input type="text" value={filterSPO} onChange={(e) => setFilterSPO(e.target.value)} placeholder="Contoh: R0181..." className="w-full border border-slate-300 rounded px-3 py-1.5 focus:outline-blue-500" />
+                  <input type="text" value={filterSPO} onChange={(e) => setFilterSPO(e.target.value)} placeholder="Contoh: R0181..." className="w-full border border-slate-300 rounded-sm px-3 py-1.5 focus:outline-blue-500" />
                 </div>
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Cari Product</label>
-                  <input type="text" value={filterProduct} onChange={(e) => setFilterProduct(e.target.value)} placeholder="Nama Produk" className="w-full border border-slate-300 rounded px-3 py-1.5 focus:outline-blue-500" />
+                  <input type="text" value={filterProduct} onChange={(e) => setFilterProduct(e.target.value)} placeholder="Nama Produk" className="w-full border border-slate-300 rounded-sm px-3 py-1.5 focus:outline-blue-500" />
                 </div>
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Plan Start Range</label>
                   <div className="flex items-center gap-2">
-                    <input type="date" value={pStartFrom} onChange={(e) => setPStartFrom(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={pStartFrom} onChange={(e) => setPStartFrom(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                     <span>-</span>
-                    <input type="date" value={pStartTo} onChange={(e) => setPStartTo(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={pStartTo} onChange={(e) => setPStartTo(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Plan Shipment Range</label>
                   <div className="flex items-center gap-2">
-                    <input type="date" value={exFactFrom} onChange={(e) => setExFactFrom(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={exFactFrom} onChange={(e) => setExFactFrom(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                     <span>-</span>
-                    <input type="date" value={exFactTo} onChange={(e) => setExFactTo(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={exFactTo} onChange={(e) => setExFactTo(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1 font-bold text-blue-700">Status Ketersediaan Material</label>
-                  <select value={filterMatStatus} onChange={(e) => setFilterMatStatus(e.target.value)} className="w-full border border-slate-300 rounded px-3 py-1.5 bg-white text-slate-700 font-semibold focus:outline-blue-500">
+                  <select value={filterMatStatus} onChange={(e) => setFilterMatStatus(e.target.value)} className="w-full border border-slate-300 rounded-sm px-3 py-1.5 bg-white text-slate-700 font-semibold focus:outline-blue-500">
                     <option value="">-- Semua Status --</option>
                     <option value="sudah_book">Sudah Book / Keluar Gudang</option>
                     <option value="free_stock">Ada Free Stock (Cukup / Kurang)</option>
@@ -283,13 +283,13 @@ function App() {
                 </div>
                 <div>
                   <label className="block text-slate-400 mb-1 font-bold text-blue-700">Type Material (Col M)</label>
-                  <select value={filterMatType} onChange={(e) => setFilterMatType(e.target.value)} className="w-full border border-slate-300 rounded px-3 py-1.5 bg-white text-slate-700 font-semibold focus:outline-blue-500">
+                  <select value={filterMatType} onChange={(e) => setFilterMatType(e.target.value)} className="w-full border border-slate-300 rounded-sm px-3 py-1.5 bg-white text-slate-700 font-semibold focus:outline-blue-500">
                     <option value="">-- Semua Tipe --</option>
                     {uniqueMaterialTypes.map((type, i) => <option key={i} value={type}>{type}</option>)}
                   </select>
                 </div>
               </div>
-              <div className="flex justify-end border-t pt-3"><button onClick={handleApplyFilter} className="bg-blue-600 text-white px-5 py-2 rounded text-xs font-bold hover:bg-blue-700 flex items-center gap-2 shadow-sm"><Search size={14} /> Mulai Filter</button></div>
+              <div className="flex justify-end border-t pt-3"><button onClick={handleApplyFilter} className="bg-blue-600 text-white px-5 py-2 rounded-sm text-xs font-bold hover:bg-blue-700 flex items-center gap-2 shadow-xs"><Search size={14} /> Mulai Filter</button></div>
             </div>
             <Dashboard data={filteredDataTab1} />
             <SpoTable data={filteredDataTab1} />
@@ -301,7 +301,7 @@ function App() {
           <section className="animate-in slide-in-from-bottom duration-400 space-y-6">
             
             {/* Panel Filter Khusus Halaman Jadwal */}
-            <div className="bg-white p-5 rounded-lg shadow-sm border border-slate-200">
+            <div className="bg-white p-5 rounded-lg shadow-xs border border-slate-200">
               <div className="flex items-center gap-2 mb-4 text-slate-700 font-bold border-b pb-2 text-sm">
                 <Filter size={16} /> <h3>Filter Jadwal & Ringkasan Kebutuhan</h3>
                 <button onClick={clearSchedFilters} className="ml-auto text-xs text-red-500 hover:underline font-normal">Reset Filter</button>
@@ -309,39 +309,39 @@ function App() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mb-4">
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Saring Nomor SPO</label>
-                  <input type="text" value={schedFilterSPO} onChange={(e) => setSchedFilterSPO(e.target.value)} placeholder="Masukkan kode SPO..." className="w-full border border-slate-300 rounded px-3 py-1.5 focus:outline-blue-500" />
+                  <input type="text" value={schedFilterSPO} onChange={(e) => setSchedFilterSPO(e.target.value)} placeholder="Masukkan kode SPO..." className="w-full border border-slate-300 rounded-sm px-3 py-1.5 focus:outline-blue-500" />
                 </div>
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Rentang Tanggal Start Production</label>
                   <div className="flex items-center gap-2">
-                    <input type="date" value={schedStartFrom} onChange={(e) => setSchedStartFrom(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={schedStartFrom} onChange={(e) => setSchedStartFrom(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                     <span>s/d</span>
-                    <input type="date" value={schedStartTo} onChange={(e) => setSchedStartTo(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={schedStartTo} onChange={(e) => setSchedStartTo(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                   </div>
                 </div>
                 <div>
                   <label className="block text-slate-500 mb-1 font-semibold">Rentang Tanggal Shipment (Ex-Fact)</label>
                   <div className="flex items-center gap-2">
-                    <input type="date" value={schedExFrom} onChange={(e) => setSchedExFrom(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={schedExFrom} onChange={(e) => setSchedExFrom(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                     <span>s/d</span>
-                    <input type="date" value={schedExTo} onChange={(e) => setSchedExTo(e.target.value)} className="w-full border border-slate-300 rounded px-2 py-1.5" />
+                    <input type="date" value={schedExTo} onChange={(e) => setSchedExTo(e.target.value)} className="w-full border border-slate-300 rounded-sm px-2 py-1.5" />
                   </div>
                 </div>
               </div>
-              <div className="flex justify-end"><button onClick={handleApplySchedFilter} className="bg-blue-600 text-white px-5 py-2 rounded text-xs font-bold hover:bg-blue-700 flex items-center gap-2 shadow-sm"><Search size={14} /> Terapkan Filter Jadwal</button></div>
+              <div className="flex justify-end"><button onClick={handleApplySchedFilter} className="bg-blue-600 text-white px-5 py-2 rounded-sm text-xs font-bold hover:bg-blue-700 flex items-center gap-2 shadow-xs"><Search size={14} /> Terapkan Filter Jadwal</button></div>
             </div>
 
             {/* Layout Grid Berdampingan: Kiri Jadwal SPO, Kanan Rekapitulasi Pembelian Material */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               
               {/* SISI KIRI: Tabel Jadwal Running SPO (6/12 Grid) */}
-              <div className="lg:col-span-6 bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+              <div className="lg:col-span-6 bg-white rounded-lg shadow-xs border border-gray-200 p-4">
                 <h3 className="text-sm font-black text-slate-800 mb-3 uppercase tracking-wider flex items-center gap-2">
                   <Calendar size={16} className="text-blue-600" /> Matrix Jadwal Produksi SPO ({filteredDataTab2.length} Record)
                 </h3>
-                <div className="overflow-x-auto max-h-[600px] overflow-y-auto border rounded">
+                <div className="overflow-x-auto max-h-[600px] overflow-y-auto border rounded-sm">
                   <table className="w-full text-left text-xs border-collapse">
-                    <thead className="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b shadow-sm z-10">
+                    <thead className="bg-slate-100 text-slate-700 uppercase font-bold sticky top-0 border-b shadow-xs z-10">
                       <tr>
                         <th className="p-3">SPO & Product</th>
                         <th className="p-3">Plan Start</th>
@@ -355,7 +355,7 @@ function App() {
                           <td className="p-3">
                             <div className="font-bold flex items-center gap-1.5">
                               {spo.spo}
-                              {spo.isDelayRisk && <span className="bg-red-600 text-white text-[8px] px-1 rounded font-black">DELAY</span>}
+                              {spo.isDelayRisk && <span className="bg-red-600 text-white text-[8px] px-1 rounded-sm font-black">DELAY</span>}
                             </div>
                             <div className="text-[10px] text-slate-400 font-normal truncate max-w-[220px]">{spo.product}</div>
                           </td>
@@ -376,13 +376,13 @@ function App() {
               <div className="lg:col-span-6 space-y-4">
                 
                 {/* Pos 1: Perlu Dikeluarkan Gudang */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-emerald-500 p-4">
+                <div className="bg-white rounded-lg shadow-xs border border-gray-200 border-l-4 border-l-emerald-500 p-4">
                   <h4 className="text-xs font-black text-emerald-800 uppercase flex items-center gap-2 mb-2 tracking-wider">
                     <Package size={14} /> 1. Perlu Dikeluarkan Gudang (Alokasi Ter-Book)
                   </h4>
                   <div className="max-h-36 overflow-y-auto text-xs space-y-1.5 pr-1">
                     {matSummary.gudang.map((m, i) => (
-                      <div key={i} className="flex justify-between items-center bg-emerald-50/50 p-2 rounded border border-emerald-100/50 font-medium">
+                      <div key={i} className="flex justify-between items-center bg-emerald-50/50 p-2 rounded-sm border border-emerald-100/50 font-medium">
                         <span className="text-slate-700 truncate max-w-[320px]">{m.label}</span>
                         <span className="font-bold text-emerald-700 whitespace-nowrap">{m.qty.toFixed(2)} {m.unit}</span>
                       </div>
@@ -392,13 +392,13 @@ function App() {
                 </div>
 
                 {/* Pos 2: Perlu Diambil Dari Free Stock */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-cyan-500 p-4">
+                <div className="bg-white rounded-lg shadow-xs border border-gray-200 border-l-4 border-l-cyan-500 p-4">
                   <h4 className="text-xs font-black text-cyan-800 uppercase flex items-center gap-2 mb-2 tracking-wider">
                     <Layers size={14} /> 2. Perlu Diambil Dari Free Stock Global
                   </h4>
                   <div className="max-h-36 overflow-y-auto text-xs space-y-1.5 pr-1">
                     {matSummary.free.map((m, i) => (
-                      <div key={i} className="flex justify-between items-center bg-cyan-50/50 p-2 rounded border border-cyan-100/50 font-medium">
+                      <div key={i} className="flex justify-between items-center bg-cyan-50/50 p-2 rounded-sm border border-cyan-100/50 font-medium">
                         <span className="text-slate-700 truncate max-w-[320px]">{m.label}</span>
                         <span className="font-bold text-cyan-700 whitespace-nowrap">{m.qty.toFixed(2)} {m.unit}</span>
                       </div>
@@ -408,13 +408,13 @@ function App() {
                 </div>
 
                 {/* Pos 3: Perlu Ditunggu PO Datang */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-amber-500 p-4">
+                <div className="bg-white rounded-lg shadow-xs border border-gray-200 border-l-4 border-l-amber-500 p-4">
                   <h4 className="text-xs font-black text-amber-800 uppercase flex items-center gap-2 mb-2 tracking-wider">
                     <Truck size={14} /> 3. Perlu Ditunggu Kedatangan PO Supplier
                   </h4>
                   <div className="max-h-36 overflow-y-auto text-xs space-y-1.5 pr-1">
                     {matSummary.poReady.map((m, i) => (
-                      <div key={i} className="flex justify-between items-center bg-amber-50/50 p-2 rounded border border-amber-100/50 font-medium">
+                      <div key={i} className="flex justify-between items-center bg-amber-50/50 p-2 rounded-sm border border-amber-100/50 font-medium">
                         <span className="text-slate-700 truncate max-w-[320px]">{m.label}</span>
                         <span className="font-bold text-amber-800 whitespace-nowrap">{m.qty.toFixed(2)} {m.unit}</span>
                       </div>
@@ -424,13 +424,13 @@ function App() {
                 </div>
 
                 {/* Pos 4: Perlu Dibukakan PO Baru */}
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 border-l-4 border-l-red-500 p-4">
+                <div className="bg-white rounded-lg shadow-xs border border-gray-200 border-l-4 border-l-red-500 p-4">
                   <h4 className="text-xs font-black text-red-800 uppercase flex items-center gap-2 mb-2 tracking-wider">
                     <ShoppingCart size={14} /> 4. Perlu Dibukakan PO Baru (Purchasing Guide)
                   </h4>
                   <div className="max-h-36 overflow-y-auto text-xs space-y-1.5 pr-1">
                     {matSummary.poNeed.map((m, i) => (
-                      <div key={i} className="flex justify-between items-center bg-red-50 p-2 rounded border border-red-100 font-medium">
+                      <div key={i} className="flex justify-between items-center bg-red-50 p-2 rounded-sm border border-red-100 font-medium">
                         <span className="text-slate-700 truncate max-w-[320px]">{m.label}</span>
                         <span className="font-black text-red-700 whitespace-nowrap">{m.qty.toFixed(2)} {m.unit}</span>
                       </div>

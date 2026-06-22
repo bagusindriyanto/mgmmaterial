@@ -18,7 +18,7 @@ const Dashboard = ({ data }) => {
       {/* Baris Utama: Metrik Baru Ketersediaan SPO Pabrik */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-3">
+        <div className="bg-white p-4 rounded-lg shadow-xs border border-gray-200 flex items-center gap-3">
           <div className="p-2.5 rounded-md bg-amber-50 text-amber-600">
             <AlertTriangle size={20} />
           </div>
@@ -30,7 +30,7 @@ const Dashboard = ({ data }) => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-3">
+        <div className="bg-white p-4 rounded-lg shadow-xs border border-gray-200 flex items-center gap-3">
           <div className="p-2.5 rounded-md bg-emerald-50 text-emerald-600">
             <CheckCircle2 size={20} />
           </div>
@@ -42,7 +42,7 @@ const Dashboard = ({ data }) => {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex items-center gap-3">
+        <div className="bg-white p-4 rounded-lg shadow-xs border border-gray-200 flex items-center gap-3">
           <div className="p-2.5 rounded-md bg-rose-50 text-rose-600">
             <Clock size={20} />
           </div>
@@ -57,23 +57,23 @@ const Dashboard = ({ data }) => {
       </div>
 
       {/* Baris Kedua: Penyusutan Visual Level Risiko (Critical/Warning/Low) */}
-      <div className="bg-white p-3 rounded-lg shadow-sm border border-gray-200 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="bg-white p-3 rounded-lg shadow-xs border border-gray-200 flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="text-gray-500 font-bold tracking-wider uppercase text-[10px]"> Breakdown Tingkat Resiko Outs: </div>
         <div className="flex gap-6">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-red-500"></span>
             <span className="text-gray-600 font-medium">Critical:</span>
-            <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">{criticalSPOs}</span>
+            <span className="font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded-sm">{criticalSPOs}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
             <span className="text-gray-600 font-medium">Warning:</span>
-            <span className="font-bold text-yellow-700 bg-yellow-50 px-2 py-0.5 rounded">{warningSPOs}</span>
+            <span className="font-bold text-yellow-700 bg-yellow-50 px-2 py-0.5 rounded-sm">{warningSPOs}</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-green-500"></span>
             <span className="text-gray-600 font-medium">Low:</span>
-            <span className="font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded">{lowSPOs}</span>
+            <span className="font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-sm">{lowSPOs}</span>
           </div>
         </div>
       </div>
