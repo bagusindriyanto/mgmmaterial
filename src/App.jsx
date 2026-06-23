@@ -11,7 +11,6 @@ import { db } from './firebase';
 import { collection, getDocs, doc, writeBatch } from 'firebase/firestore';
 import {
   Save,
-  RefreshCw,
   Filter,
   Search,
   Calendar,
@@ -22,6 +21,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import Swal from 'sweetalert2';
+import Header from './components/Header';
 
 function App() {
   const [outsFile, setOutsFile] = useState(null);
@@ -118,21 +118,23 @@ function App() {
       allowOutsideClick: false,
       didOpen: () => Swal.showLoading(),
     });
-    await new Promise((resolve) => setTimeout(resolve, 150));
     try {
       const gasUrl =
         'https://script.google.com/macros/s/AKfycbwf2SLLQRtjUNLSaHTqUcdWlULexrYa7Je3PVgILaCgsdDHIttGFhNYd7dsQ-awC15l/exec'; // Ganti URL GAS Anda di sini
-      const response = await fetch(gasUrl);
-      const monitoringAPIResult = await response.json();
+      const [monitoringAPIResult, outsData, poData, bookData] =
+        await Promise.all([
+          fetch(gasUrl).then((response) => response.json()),
+          parseCSV(outsFile),
+          parseCSV(poFile),
+          parseCSV(bookFile),
+        ]);
 
-      const outsData = await parseCSV(outsFile);
-      const poData = await parseCSV(poFile);
-      const bookData = await parseCSV(bookFile);
+      // const response = await fetch(gasUrl);
+      // const monitoringAPIResult = await response.json();
 
-      console.log('outsData', outsData);
-      console.log('poData', poData);
-      console.log('bookData', bookData);
-      console.log('monitoringAPIResult', monitoringAPIResult);
+      // const outsData = await parseCSV(outsFile);
+      // const poData = await parseCSV(poFile);
+      // const bookData = await parseCSV(bookFile);
 
       const processed = processDashboardData(
         outsData,
@@ -390,22 +392,7 @@ function App() {
     <div className="min-h-screen bg-slate-50 p-4 md:p-8 font-sans">
       <div className="max-w-7xl mx-auto">
         {/* Header Dashboard */}
-        <header className="mb-6 flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b pb-4 border-slate-200">
-          <div>
-            <h1 className="text-3xl font-black text-slate-800 tracking-tight">
-              MGM SPO - Material Monitoring
-            </h1>
-            <p className="text-slate-500 mt-1">
-              Material Tracing & Allocation by SPO
-            </p>
-          </div>
-          <button
-            onClick={() => loadFromFirebase(false)}
-            className="flex items-center gap-2 text-blue-700 font-bold bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-sm transition-colors text-sm shadow-xs"
-          >
-            <RefreshCw size={14} /> Sync Server Data
-          </button>
-        </header>
+        <Header onClick={loadFromFirebase} />
 
         {/* Upload Container Component */}
         <section>
@@ -437,7 +424,7 @@ function App() {
             </div>
             <button
               onClick={saveToFirebase}
-              className="bg-emerald-600 text-white px-5 py-2 rounded-sm text-sm hover:bg-emerald-700 flex items-center gap-2 shadow-sm font-bold w-full sm:w-auto justify-center transition-colors"
+              className="bg-emerald-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-5 py-2 rounded-sm text-sm hover:not-disabled:bg-emerald-700 flex items-center gap-2 shadow-sm font-bold w-full sm:w-auto justify-center transition-colors"
             >
               <Save size={16} /> Save Server Data
             </button>

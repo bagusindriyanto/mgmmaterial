@@ -1,11 +1,34 @@
-import { useState } from 'react';
-import { AlertCircle, CheckCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import {
+  AlertCircle,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from 'lucide-react';
 
 const SpoTable = ({ data }) => {
   if (!data || data.length === 0) return null;
 
   // State untuk filter interaktif klik Type Group per baris SPO
   const [activeRowFilters, setActiveRowFilters] = useState({});
+
+  // State Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10; // 20 baris per halaman
+
+  // Reset ke halaman 1 ketika filter data berubah
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [data]);
+
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentItems = data.slice(startIndex, endIndex);
 
   const handleGroupClick = (spoId, groupName) => {
     setActiveRowFilters((prev) => {
@@ -37,7 +60,7 @@ const SpoTable = ({ data }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {data.map((spo, idx) => {
+            {currentItems.map((spo, idx) => {
               const selectedGroups = activeRowFilters[spo.spo] || [];
               const displayedMaterials =
                 selectedGroups.length > 0
@@ -274,6 +297,122 @@ const SpoTable = ({ data }) => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 select-none">
+          {/* Mobile View Buttons */}
+          <div className="flex-1 flex justify-between sm:hidden">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Previous
+            </button>
+            <button
+              onClick={() =>
+                setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+              }
+              disabled={currentPage === totalPages}
+              className="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-slate-700 bg-white hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
+
+          {/* Desktop View Controls */}
+          <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+              <p className="text-xs text-slate-500 font-medium">
+                Menampilkan{' '}
+                <span className="font-bold text-slate-800">
+                  {startIndex + 1}
+                </span>{' '}
+                sampai{' '}
+                <span className="font-bold text-slate-800">
+                  {Math.min(endIndex, totalItems)}
+                </span>{' '}
+                dari{' '}
+                <span className="font-bold text-slate-800">{totalItems}</span>{' '}
+                SPO
+              </p>
+            </div>
+            <div>
+              <nav
+                className="relative z-0 inline-flex rounded-md shadow-xs -space-x-px"
+                aria-label="Pagination"
+              >
+                <button
+                  onClick={() => setCurrentPage(1)}
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-xs font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  title="First Page"
+                >
+                  <ChevronsLeft size={16} />
+                </button>
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(prev - 1, 1))
+                  }
+                  disabled={currentPage === 1}
+                  className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-xs font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  title="Previous Page"
+                >
+                  <ChevronLeft size={16} />
+                </button>
+
+                {/* Dinamis menampilkan nomor halaman (Maksimal 5 halaman sekitar halaman saat ini) */}
+                {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+                  let pageNum;
+                  if (totalPages <= 5) {
+                    pageNum = i + 1;
+                  } else if (currentPage <= 3) {
+                    pageNum = i + 1;
+                  } else if (currentPage >= totalPages - 2) {
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    pageNum = currentPage - 2 + i;
+                  }
+
+                  return (
+                    <button
+                      key={pageNum}
+                      onClick={() => setCurrentPage(pageNum)}
+                      className={`relative inline-flex items-center px-3.5 py-2 border text-xs font-bold transition-all ${
+                        currentPage === pageNum
+                          ? 'z-10 bg-blue-600 border-blue-600 text-white shadow-xs'
+                          : 'bg-white border-gray-300 text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      {pageNum}
+                    </button>
+                  );
+                })}
+
+                <button
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                  }
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-xs font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  title="Next Page"
+                >
+                  <ChevronRight size={16} />
+                </button>
+                <button
+                  onClick={() => setCurrentPage(totalPages)}
+                  disabled={currentPage === totalPages}
+                  className="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-xs font-semibold text-slate-500 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                  title="Last Page"
+                >
+                  <ChevronsRight size={16} />
+                </button>
+              </nav>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -313,8 +313,14 @@ export const processDashboardData = (outsData, poData, monitoringAPIResult, book
       }
     }
 
+    const cleanSpo = { ...spo };
+    delete cleanSpo.rows; // Hapus data mentah CSV 75 kolom untuk mencegah memory leak
+    delete cleanSpo.pStartDateObj;
+    delete cleanSpo.pFinishDateObj;
+    delete cleanSpo.exFactDateObj;
+
     return { 
-      ...spo, 
+      ...cleanSpo, 
       groups: Array.from(spo.groups), 
       daysLeft: isNaN(daysLeft) ? 0 : daysLeft, 
       level,
